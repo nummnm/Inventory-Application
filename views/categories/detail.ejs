@@ -1,0 +1,64 @@
+<%- include("../partials/header", { title }) %>
+<p class="breadcrumbs">
+  <a href="/categories">Categories</a>
+  <span>/</span>
+  <%= category.name %>
+</p>
+
+<section class="detail-heading">
+  <div>
+    <p class="eyebrow">CATEGORY</p>
+    <h1><%= category.name %></h1>
+    <p class="subheading"><%= category.description || "No description provided." %></p>
+  </div>
+  <div class="actions">
+    <a class="button button-secondary" href="/categories/<%= category.id %>/edit">Edit category</a>
+    <form
+      action="/categories/<%= category.id %>/delete"
+      method="post"
+      data-admin-delete
+      data-confirm-message="Delete this category? Categories with items cannot be deleted."
+    >
+      <input type="hidden" name="admin_password">
+      <button class="button button-danger" type="submit">Delete category</button>
+    </form>
+  </div>
+</section>
+
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">CATEGORY INVENTORY</p>
+    <h2>Items in this category</h2>
+  </div>
+</section>
+
+<section class="table-wrap" aria-label="Items in this category">
+  <% if (items.length) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>SKU</th>
+          <th>In stock</th>
+          <th class="numeric">Unit price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% items.forEach((item) => { %>
+          <tr>
+            <td><a class="item-link" href="/items/<%= item.id %>"><%= item.name %></a></td>
+            <td><%= item.sku || "-" %></td>
+            <td><%= item.quantity %></td>
+            <td class="numeric">$<%= Number(item.price).toFixed(2) %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <div class="empty-state">
+      <h2>No items in this category</h2>
+      <p>Items you assign to this category will appear here.</p>
+    </div>
+  <% } %>
+</section>
+<%- include("../partials/footer") %>

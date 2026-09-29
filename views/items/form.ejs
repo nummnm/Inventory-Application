@@ -1,0 +1,72 @@
+<%- include("../partials/header", { title }) %>
+<p class="breadcrumbs">
+  <a href="/items">Inventory</a>
+  <span>/</span>
+  <%= item.id ? "Edit item" : "New item" %>
+</p>
+<section class="form-heading">
+  <p class="eyebrow">INVENTORY RECORD</p>
+  <h1><%= item.id ? "Edit item" : "Add an item" %></h1>
+</section>
+<% if (error) { %>
+  <p class="alert" role="alert"><%= error %></p>
+<% } %>
+<form class="form-panel" action="<%= item.id ? `/items/${item.id}/update` : '/items' %>" method="post">
+  <label>
+    Item name
+    <input name="name" required maxlength="150" value="<%= item.name || '' %>" autocomplete="off">
+  </label>
+  <label>
+    Description
+    <textarea name="description" rows="4"><%= item.description || '' %></textarea>
+  </label>
+  <div class="form-row">
+    <label>
+      SKU
+      <input name="sku" maxlength="60" value="<%= item.sku || '' %>">
+    </label>
+    <label>
+      Category (optional)
+      <select name="category_id">
+        <option value="">Uncategorized</option>
+        <% categories.forEach((category) => { %>
+          <option value="<%= category.id %>" <%= String(item.category_id) === String(category.id) ? "selected" : "" %>>
+            <%= category.name %>
+          </option>
+        <% }) %>
+      </select>
+    </label>
+  </div>
+  <div class="form-row">
+    <label>
+      Unit price
+      <span class="input-prefix">
+        <span>$</span>
+        <input name="price" type="number" min="0" step="0.01" required value="<%= item.price ?? '' %>">
+      </span>
+    </label>
+    <label>
+      Quantity in stock
+      <input name="quantity" type="number" min="0" step="1" required value="<%= item.quantity ?? 0 %>">
+    </label>
+  </div>
+  <% if (item.id) { %>
+    <label class="admin-password-field">
+      Admin password to confirm changes
+      <input
+        name="admin_password"
+        type="password"
+        required
+        autocomplete="new-password"
+      >
+    </label>
+  <% } %>
+  <% if (!categories.length) { %>
+    <p class="form-hint">You can save this item without a category, or <a href="/categories/new">add a category</a>.</p>
+  <% } %>
+  <div class="form-actions">
+    <a class="button button-secondary" href="/items">Cancel</a>
+    <button class="button button-primary" type="submit">Save item</button>
+  </div>
+</form>
+<%- include("../partials/footer") %>

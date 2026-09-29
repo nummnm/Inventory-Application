@@ -1,0 +1,51 @@
+<%- include("../partials/header", { title }) %>
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">ORGANIZATION</p>
+    <h1>Categories</h1>
+    <p class="subheading">Group items for the inventory.</p>
+  </div>
+  <a class="button button-primary" href="/categories/new"><span aria-hidden="true">+</span> Add category</a>
+</section>
+<% if (message) { %>
+  <p class="notice"><%= message %></p>
+<% } %>
+<% if (error) { %>
+  <p class="alert" role="alert"><%= error %></p>
+<% } %>
+<section class="category-list">
+  <% if (categories.length) { %>
+    <% categories.forEach((category) => { %>
+      <article class="category-row">
+        <div class="category-copy">
+          <h2><%= category.name %></h2>
+          <p><%= category.description || "No description" %></p>
+        </div>
+        <span class="count">
+          <%= category.item_count %>
+          <%= category.item_count === 1 ? "item" : "items" %>
+        </span>
+        <div class="actions">
+          <a class="button button-secondary" href="/categories/<%= category.id %>">View</a>
+          <a class="button button-secondary" href="/categories/<%= category.id %>/edit">Edit</a>
+          <form
+            action="/categories/<%= category.id %>/delete"
+            method="post"
+            data-admin-delete
+            data-confirm-message="Delete this category? Categories with items cannot be deleted."
+          >
+            <input type="hidden" name="admin_password">
+            <button class="button button-danger" type="submit">Delete</button>
+          </form>
+        </div>
+      </article>
+    <% }) %>
+  <% } else { %>
+    <div class="empty-state">
+      <h2>No categories yet</h2>
+      <p>Create a category before adding inventory items.</p>
+      <a class="button button-primary" href="/categories/new">Add category</a>
+    </div>
+  <% } %>
+</section>
+<%- include("../partials/footer") %>

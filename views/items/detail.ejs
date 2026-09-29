@@ -1,0 +1,48 @@
+<%- include("../partials/header", { title }) %>
+<p class="breadcrumbs">
+  <a href="/items">Inventory</a>
+  <span>/</span>
+  <%= item.name %>
+</p>
+<section class="detail-heading">
+  <div>
+    <p class="eyebrow"><%= item.category_name || "Uncategorized" %></p>
+    <h1><%= item.name %></h1>
+    <p class="subheading"><%= item.sku ? `SKU ${item.sku}` : "No SKU assigned" %></p>
+  </div>
+  <div class="actions">
+    <a class="button button-secondary" href="/items/<%= item.id %>/edit">Edit item</a>
+    <form
+      action="/items/<%= item.id %>/delete"
+      method="post"
+      data-admin-delete
+      data-confirm-message="Delete this item?"
+    >
+      <input type="hidden" name="admin_password">
+      <button class="button button-danger" type="submit">Delete</button>
+    </form>
+  </div>
+</section>
+<section class="detail-grid">
+  <div class="detail-cell">
+    <span>Quantity on hand</span>
+    <strong><%= item.quantity %></strong>
+  </div>
+  <div class="detail-cell">
+    <span>Unit price</span>
+    <strong>$<%= Number(item.price).toFixed(2) %></strong>
+  </div>
+  <div class="detail-cell">
+    <span>Category</span>
+    <strong><%= item.category_name || "Uncategorized" %></strong>
+  </div>
+  <div class="detail-cell">
+    <span>SKU</span>
+    <strong><%= item.sku || "-" %></strong>
+  </div>
+</section>
+<section class="description">
+  <h2>Description</h2>
+  <p><%= item.description || "No description provided." %></p>
+</section>
+<%- include("../partials/footer") %>

@@ -1,0 +1,63 @@
+<%- include("../partials/header", { title }) %>
+<p class="breadcrumbs">
+  <a href="/categories">Categories</a>
+  <span>/</span>
+  <%= category.id ? "Edit category" : "New category" %>
+</p>
+<section class="form-heading">
+  <p class="eyebrow">ORGANIZATION</p>
+  <h1><%= category.id ? "Edit category" : "Add a category" %></h1>
+</section>
+<% if (error) { %>
+  <p class="alert" role="alert"><%= error %></p>
+<% } %>
+<form class="form-panel" action="<%= category.id ? `/categories/${category.id}/update` : '/categories' %>" method="post">
+  <label>
+    Category name
+    <input name="name" required maxlength="100" value="<%= category.name || '' %>" autocomplete="off">
+  </label>
+  <label>
+    Description
+    <textarea name="description" rows="4"><%= category.description || '' %></textarea>
+  </label>
+  <fieldset class="assignment-list">
+    <legend>Assign existing items</legend>
+    <p class="form-hint">Selected items will belong to this category. Unselected items will be uncategorized.</p>
+    <% if (items.length) { %>
+      <div class="assignment-options">
+        <% items.forEach((item) => { %>
+          <label class="assignment-option">
+            <input
+              type="checkbox"
+              name="item_ids"
+              value="<%= item.id %>"
+              <%= selectedItemIds.includes(Number(item.id)) ? "checked" : "" %>
+            >
+            <span>
+              <strong><%= item.name %></strong>
+              <small>Currently in <%= item.category_name || "Uncategorized" %></small>
+            </span>
+          </label>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p class="form-hint">There are no existing items to assign.</p>
+    <% } %>
+  </fieldset>
+  <% if (category.id) { %>
+    <label class="admin-password-field">
+      Admin password to confirm changes
+      <input
+        name="admin_password"
+        type="password"
+        required
+        autocomplete="new-password"
+      >
+    </label>
+  <% } %>
+  <div class="form-actions">
+    <a class="button button-secondary" href="/categories">Cancel</a>
+    <button class="button button-primary" type="submit">Save category</button>
+  </div>
+</form>
+<%- include("../partials/footer") %>

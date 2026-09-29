@@ -1,0 +1,68 @@
+<%- include("../partials/header", { title }) %>
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">STOCK CONTROL</p>
+    <h1>Inventory</h1>
+    <p class="subheading">A clear view of everything you have on hand.</p>
+  </div>
+  <a class="button button-primary" href="/items/new"><span aria-hidden="true">+</span> Add item</a>
+</section>
+<% if (message) { %>
+  <p class="notice"><%= message %></p>
+<% } %>
+<% if (error) { %>
+  <p class="alert" role="alert"><%= error %></p>
+<% } %>
+<section class="table-wrap" aria-label="Inventory items">
+  <% if (items.length) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>SKU</th>
+          <th>Category</th>
+          <th>In stock</th>
+          <th class="numeric">Unit price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% items.forEach((item) => { %>
+          <tr>
+            <td><a class="item-link" href="/items/<%= item.id %>"><%= item.name %></a></td>
+            <td><%= item.sku || "-" %></td>
+            <td><%= item.category_name || "Uncategorized" %></td>
+            <td>
+              <span class="stock <%= item.quantity === 0 ? 'stock-empty' : item.quantity < 5 ? 'stock-low' : '' %>">
+                <%= item.quantity %>
+              </span>
+            </td>
+            <td class="numeric">$<%= Number(item.price).toFixed(2) %></td>
+            <td>
+              <div class="actions">
+                <a class="button button-secondary" href="/items/<%= item.id %>">View</a>
+                <a class="button button-secondary" href="/items/<%= item.id %>/edit">Edit</a>
+                <form
+                  action="/items/<%= item.id %>/delete"
+                  method="post"
+                  data-admin-delete
+                  data-confirm-message="Delete this item?"
+                >
+                  <input type="hidden" name="admin_password">
+                  <button class="button button-danger" type="submit">Delete</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <div class="empty-state">
+      <h2>No items yet</h2>
+      <p>Add your first item to start tracking stock.</p>
+      <a class="button button-primary" href="/items/new">Add item</a>
+    </div>
+  <% } %>
+</section>
+<%- include("../partials/footer") %>

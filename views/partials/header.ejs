@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %> | My stocks</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <script src="/delete-confirmation.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/items">
+      <span class="brand-mark">:></span>
+      My stocks
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="/items" class="<%= title === 'Inventory' ? 'active' : '' %>">Inventory</a>
+      <a href="/categories" class="<%= title === 'Categories' ? 'active' : '' %>">Categories</a>
+    </nav>
+  </header>
+  <main class="page">

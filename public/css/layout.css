@@ -1,0 +1,99 @@
+.topbar {
+	display: flex;
+	height: 68px;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 max(6vw, 24px);
+	border-bottom: 1px solid var(--line);
+	background: #fff;
+}
+
+.brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	font-family: Manrope, sans-serif;
+	font-size: 17px;
+	font-weight: 800;
+	text-decoration: none;
+}
+
+.brand-mark {
+	display: grid;
+	width: 30px;
+	height: 30px;
+	place-items: center;
+	border-radius: 7px;
+	color: #fff;
+	background: black;
+}
+
+nav {
+	display: flex;
+	height: 68px;
+	gap: 30px;
+}
+
+nav a {
+	display: grid;
+	align-items: center;
+	border-bottom: 2px solid transparent;
+	color: var(--muted);
+	font-size: 14px;
+	text-decoration: none;
+}
+
+nav a:hover {
+  border-color: var(--green-dark);
+	color: var(--green-dark);
+}
+nav a.active {
+	border-color: var(--green);
+	color: var(--green);
+}
+
+.page {
+	width: min(1040px, calc(100% - 48px));
+	min-height: calc(100vh - 220px);
+	margin: 56px auto 80px;
+}
+
+.page-heading,
+.detail-heading {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 24px;
+	margin-bottom: 32px;
+}
+
+.breadcrumbs {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 28px;
+	color: var(--muted);
+	font-size: 13px;
+}
+
+.breadcrumbs a {
+	color: var(--green);
+	text-decoration: none;
+}
+
+.detail-heading {
+	align-items: center;
+}
+
+.detail-heading .eyebrow {
+	margin-bottom: 7px;
+}
+
+.footer {
+	display: flex;
+	justify-content: space-between;
+	padding: 20px max(6vw, 24px);
+	border-top: 1px solid rgb(247, 246, 246);
+	color: #8b948d;
+	background: #fff;
+	font-size: 12px;
+}
